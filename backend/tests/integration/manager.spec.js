@@ -23,7 +23,8 @@ describe('MANAGER', () => {
         name: "Rafael Leme",
         cpf: generatedCpf,
         email: "rafanleme@gmail.com",
-        celular: "19998208013"
+        celular: "5519998208013",
+        password: "123456"
       })
     expect(response.ok).toBe(true)
     expect(response.body).toHaveProperty('id');
@@ -36,7 +37,8 @@ describe('MANAGER', () => {
         name: "Rafael Leme",
         cpf: generatedCpf,
         email: "rafanleme@gmail.com",
-        celular: "19998208013"
+        celular: "5519998208013",
+        password: "123456"
       })
 
     expect(response.ok).toBe(false)
@@ -51,7 +53,8 @@ describe('MANAGER', () => {
         name: "Rafael Leme",
         cpf: cpf.generate(),
         email: "rafanleme@gmail.com",
-        celular: "19998208013"
+        celular: "5519998208013",
+        password: "123456"
       })
 
     expect(response.ok).toBe(false)

@@ -6,15 +6,18 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "pretest": "cross-env NODE_ENV=test yarn sequelize db:migrate",
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest || :",
+    "posttest": "cross-env NODE_ENV=test yarn sequelize db:migrate:undo:all",
     "reset-db": "yarn sequelize db:migrate:undo:all && yarn sequelize db:migrate"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "celebrate": "^12.1.0",
     "cors": "^2.8.5",
     "cpf-cnpj-validator": "^1.0.1",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
+    "multer": "^1.4.2",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.6",
     "sequelize-cli": "^5.5.1"

@@ -16,11 +16,11 @@ describe('CONDOMINIUM', () => {
       .send({
         name: "Rafael Leme",
         cpf: generatedCpf,
-        email: "rafanleme@gmail.com",
-        celular: "19998208013"
+        email: "rafan@gmail.com",
+        celular: "5519998208013",
+        password: "123456"
       })
     managerId = response.body.id
-    console.log(managerId)
     done()
   })
 
