@@ -14,6 +14,7 @@ routes.post("/managers", managerValidator.create, ManagerController.store);
 routes.post("/members", memberValidator.create, MemberController.store);
 
 //private routes rules=manager
+routes.get('/condominiums', CondominiumController.index)
 routes.post(
   "/condominiums",
   condominiumValidator.create,

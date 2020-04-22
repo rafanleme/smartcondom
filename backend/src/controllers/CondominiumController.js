@@ -3,16 +3,24 @@ const Condominium = require('../models/Condominium')
 const CondominiumAddress = require('../models/CondominiumAddress')
 
 module.exports = {
+
+  async index(req, res) {
+    const condominium = await Condominium.findAll({
+      include: { association: 'address' }
+    })
+    res.send(condominium)
+  },
+
   async store(req, res) {
-    //converter o token e recuperar o manager_id logado
+    //converter o token e recuperar o created_manager_id logado
     const token = req.headers.authorization;
-    const [Bearer, manager_id] = token.split(" ")
+    const [Bearer, created_manager_id] = token.split(" ")
 
     const { name, cnpj } = req.body;
     const { zipcode, street, number, neighborhood, city, uf } = req.body.address
 
     try {
-      const manager = await Manager.findByPk(manager_id)
+      const manager = await Manager.findByPk(created_manager_id)
 
       if (!manager)
         return res.status(404).json({ error: "Manager not found" })
@@ -30,8 +38,16 @@ module.exports = {
       condominium = await Condominium.create({
         name,
         cnpj,
-        manager_id
+        created_manager_id
       })
+      
+      await condominium.addManager(manager, { 
+        through: { 
+          approved: true, 
+          approved_manager_id: manager.id,
+          approved_date: Date()
+        } 
+      });
 
       condominiumAdrress = await CondominiumAddress.create({
         zipcode,
@@ -47,7 +63,8 @@ module.exports = {
 
       res.status(201).json(condominium)
     } catch (e) {
-      res.status(500).send({ error: 'internal server error' })
+      console.log(e)
+      res.status(500).send(e)
     }
   }
 }

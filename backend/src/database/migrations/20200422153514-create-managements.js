@@ -2,27 +2,41 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('condominiums', {
+    return queryInterface.createTable('managements', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      created_manager_id: {
+      manager_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'managers', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      name: {
-        type: Sequelize.STRING,
+      condominium_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'condominiums', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      approved:{
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      cnpj: {
-        type: Sequelize.STRING,
+      approved_manager_id:{
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: { model: 'managers', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      approved_date:{
+        type: Sequelize.DATE,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -36,6 +50,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('condominiums');
+    return queryInterface.dropTable('managements');
   }
 };
