@@ -4,7 +4,7 @@ module.exports = {
   username: 'root',
   password: 'bcd127',
   database: process.env.NODE_ENV === 'test' ? 'smartcondom_test' : 'smartcondom',
-  // logging: false,
+  logging: false,
   define: {
     timestamp: true,
     underscored: true,

@@ -23,21 +23,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      approved:{
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-      },
-      approved_manager_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'managers', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      },
-      approved_date:{
-        type: Sequelize.DATE,
-        allowNull: true,
-      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false

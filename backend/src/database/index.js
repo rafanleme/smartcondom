@@ -16,7 +16,6 @@ Condominium.init(connection)
 CondominiumAddress.init(connection)
 Condominium.associate(connection.models)
 CondominiumAddress.associate(connection.models)
-Management.associate(connection.models)
 
 
 module.exports = connection

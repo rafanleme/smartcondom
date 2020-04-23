@@ -14,7 +14,6 @@ class Manager extends Model {
   }
 
   static associate(models){
-    this.belongsTo(models.Manager, { foreignKey: 'created_manager_id', as: 'created_manager'});
     this.belongsToMany(models.Condominium, { foreignKey: 'manager_id', through: models.Management, as: 'condominium' });
   }
 

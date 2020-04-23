@@ -41,13 +41,7 @@ module.exports = {
         created_manager_id
       })
       
-      await condominium.addManager(manager, { 
-        through: { 
-          approved: true, 
-          approved_manager_id: manager.id,
-          approved_date: Date()
-        } 
-      });
+      await condominium.addManager(manager);
 
       condominiumAdrress = await CondominiumAddress.create({
         zipcode,
