@@ -2,17 +2,17 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('managements', {
+    return queryInterface.createTable('living', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      manager_id: {
+      member_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'managers', key: 'id' },
+        references: { model: 'members', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
@@ -23,22 +23,34 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      created_manager_id: {
-        type: Sequelize.INTEGER,
+      apartment_block: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      apartment_number: {
+        type: Sequelize.STRING,
         allowNull: false,
+      },
+      aproved: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      aproved_manager_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
         references: { model: 'managers', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
+      },
+      aproved_date: {
+        type: Sequelize.DATE,
+        allowNull: true
       },
       active: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true,
-      },
-      principal: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -52,6 +64,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('managements');
+    return queryInterface.dropTable('living');
   }
 };

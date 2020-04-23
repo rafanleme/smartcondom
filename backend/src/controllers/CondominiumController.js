@@ -1,6 +1,7 @@
 const Manager = require('../models/Manager')
 const Condominium = require('../models/Condominium')
 const CondominiumAddress = require('../models/CondominiumAddress')
+const { v4: uuid } = require('uuid')
 
 module.exports = {
 
@@ -38,10 +39,13 @@ module.exports = {
       condominium = await Condominium.create({
         name,
         cnpj,
-        created_manager_id
+        created_manager_id,
+        ticket: uuid()
       })
-      
-      await condominium.addManager(manager);
+
+      await condominium.addManager(manager, {
+        through: { created_manager_id, principal: true }
+      });
 
       condominiumAdrress = await CondominiumAddress.create({
         zipcode,

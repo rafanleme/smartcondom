@@ -5,6 +5,7 @@ class Condominium extends Model {
     super.init({
       name: DataTypes.STRING,
       cnpj: DataTypes.STRING,
+      ticket: DataTypes.STRING,
     }, {
       sequelize,
       modelName: 'condominiums'
@@ -15,6 +16,7 @@ class Condominium extends Model {
     this.hasOne(models.CondominiumAddress, { foreignKey: 'condominium_id', as: 'address' });
     this.belongsTo(models.Manager, { foreignKey: 'created_manager_id', as: 'created_manager' });
     this.belongsToMany(models.Manager, { foreignKey: 'condominium_id', through: models.Management, as: 'managers' })
+    this.belongsToMany(models.Member, { foreignKey: 'condominium_id', through: models.Living, as: 'members' })
   }
 
 }

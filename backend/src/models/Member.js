@@ -12,8 +12,15 @@ class Member extends Model {
       cover_picture: DataTypes.STRING,
     }, {
       sequelize,
-      modelName: 'members'
     })
+  }
+
+  static associate(models) {
+    this.belongsToMany(models.Condominium, {
+      foreignKey: 'member_id',
+      through: models.Living,
+      as: 'condominium'
+    });
   }
 
 }
