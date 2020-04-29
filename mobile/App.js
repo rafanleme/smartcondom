@@ -6,12 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import createRootNavigator from "./navigation/RootNavigator";
+import Routes from "./navigation/routes";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 
 const Stack = createStackNavigator();
-const RootNavigation = createRootNavigator(false);
+// const RootNavigation = createRootNavigator(false);
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -43,7 +43,7 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         {Platform.OS === "ios" && <StatusBar barStyle="dark-content" />}
-        <RootNavigation />
+        <Routes />
       </View>
     );
   }
