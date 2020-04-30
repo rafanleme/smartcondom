@@ -4,7 +4,7 @@ export default {
   tintColor,
   primary: "#f5f923",
   textDark: "#444",
-  textLight: "#FFF",
+  textLight: "#EEE",
   textDisabled: "#CCC",
   transparent: "#FFFFFF00",
   bgLoading: "#CCCCCC55",

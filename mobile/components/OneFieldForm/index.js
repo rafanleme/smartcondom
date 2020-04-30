@@ -16,7 +16,14 @@ import styles from "./styles";
 import Colors from "../../constants/Colors";
 
 export default function OneFieldForm(props) {
-  const { field, confirmDisabled, fieldName, onSubmit, loading } = props;
+  const {
+    field,
+    confirmDisabled,
+    fieldName,
+    onSubmit,
+    loading,
+    msgDisabled,
+  } = props;
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -29,7 +36,7 @@ export default function OneFieldForm(props) {
 
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 18}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 + 64 : 18 + 64}
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       enabled
@@ -66,7 +73,7 @@ export default function OneFieldForm(props) {
           <View style={styles.containerFooter}>
             <ButtonConfirm
               disabled={confirmDisabled}
-              msgDisabled="Ops, preencha por favor o CPF"
+              msgDisabled={msgDisabled}
               onPress={(e) => {
                 onSubmit(e);
               }}

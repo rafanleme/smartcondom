@@ -1,17 +1,12 @@
 import * as React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { SplashScreen } from "expo";
-import * as Font from "expo-font";
-import { Ionicons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Routes from "./navigation/routes";
-import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 
 const Stack = createStackNavigator();
-// const RootNavigation = createRootNavigator(false);
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -19,7 +14,6 @@ export default function App(props) {
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
 
-  // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
