@@ -13,14 +13,14 @@ const screenWidth = Dimensions.get("window").width;
 export default function NameSreen({ navigation, route }) {
   const fieldLength = 150;
   const [name, setName] = useState("");
-  const [progress, setProgress] = useState(0.32);
+  const [progress, setProgress] = useState(0.28);
   const [loading, setLoading] = useState(false);
   const [confirmDisabled, setConfirmDisabled] = useState(true);
   const nameField = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
-      setProgress(0.48);
+      setProgress(0.42);
     }, 250);
   }, []);
 
@@ -36,18 +36,16 @@ export default function NameSreen({ navigation, route }) {
 
   const handlerSubmit = () => {
     const cleanedName = name.trim();
-    const manager = {
-      ...route.params.manager,
+    const user = {
+      ...route.params.user,
       name: cleanedName,
     };
     setLoading(true);
     setConfirmDisabled(true);
-    setTimeout(() => {
-      setLoading(false);
-      setConfirmDisabled(false);
+    setLoading(false);
+    setConfirmDisabled(false);
 
-      navigation.navigate("EmailScreen");
-    }, 250);
+    navigation.navigate("EmailScreen", user);
   };
 
   return (
@@ -68,25 +66,26 @@ export default function NameSreen({ navigation, route }) {
         loading={loading}
         onSubmit={handlerSubmit}
         msgDisabled="Ops, o nome deve ter pelo menos 4 caracteres"
-      >
-        <TextInput
-          value={name}
-          ref={nameField}
-          style={[
-            styles.input,
-            { color: loading ? Colors.textDisabled : Colors.textDark },
-          ]}
-          editable={!loading}
-          placeholderTextColor={Colors.textDisabled}
-          placeholder="Informe aqui seu nome"
-          autoCapitalize="words"
-          keyboardType="default"
-          autoFocus={true}
-          maxLength={fieldLength}
-          onChangeText={handlerName}
-          onSubmitEditing={handlerSubmit}
-        />
-      </OneFieldForm>
+        formField={
+          <TextInput
+            value={name}
+            ref={nameField}
+            style={[
+              styles.input,
+              { color: loading ? Colors.textDisabled : Colors.textDark },
+            ]}
+            editable={!loading}
+            placeholderTextColor={Colors.textDisabled}
+            placeholder="Informe aqui seu nome"
+            autoCapitalize="words"
+            keyboardType="default"
+            autoFocus={true}
+            maxLength={fieldLength}
+            onChangeText={handlerName}
+            onSubmitEditing={handlerSubmit}
+          />
+        }
+      ></OneFieldForm>
     </>
   );
 }

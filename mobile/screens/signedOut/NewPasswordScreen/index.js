@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { TextInput, Keyboard, Alert, Dimensions } from "react-native";
+import { View, Text, Alert, TextInput, Dimensions } from "react-native";
 
 import OneFieldForm from "../../../components/OneFieldForm";
 import ProgressBar from "../../../components/ProgressBar";
@@ -9,23 +9,23 @@ import styles from "./styles";
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function EmailScreen({ navigation, route }) {
-  const filedLength = 150;
-  const [email, setEmail] = useState("");
-  const [progress, setProgress] = useState(0.42);
+export default function NewPasswordScreen({ navigation, route }) {
+  const filedLength = 50;
+  const [password, setPassword] = useState("");
+  const [progress, setProgress] = useState(0.7);
   const [loading, setLoading] = useState(false);
   const [confirmDisabled, setConfirmDisabled] = useState(true);
-  const emailField = useRef(null);
+  const passwordField = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
-      setProgress(0.56);
+      setProgress(0.85);
     }, 250);
   }, []);
 
-  const handlerEmail = (e) => {
-    setEmail(e.trim());
-    if (!e.trim().match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i)) {
+  const handlerPassword = (e) => {
+    setPassword(e.trim());
+    if (!e.trim().match(/^(?=.*[A-Z]{1})(?=.*[0-9])(?=.*[a-z]).{8,}$/g)) {
       setConfirmDisabled(true);
     } else {
       setConfirmDisabled(false);
@@ -33,26 +33,18 @@ export default function EmailScreen({ navigation, route }) {
   };
 
   const handlerSubmit = async () => {
-    const cleanedEmail = email.trim();
     const user = {
       ...route.params.user,
-      email: cleanedEmail,
+      password: password,
     };
     setLoading(true);
     setConfirmDisabled(true);
 
-    setTimeout(() => {
-      setLoading(false);
-      setConfirmDisabled(false);
+    setLoading(false);
+    setConfirmDisabled(false);
 
-      if (email === "rafanleme@gmail.com")
-        return Alert.alert(
-          "Ops...",
-          "Este endereço de e-mail já está em uso por outra conta"
-        );
-
-      navigation.navigate("PhoneScreen", user);
-    }, 250);
+    //if(api.register())
+    navigation.navigate("SignedIn", user);
   };
 
   return (
@@ -66,35 +58,43 @@ export default function EmailScreen({ navigation, route }) {
         color={Colors.tintColor}
       />
       <OneFieldForm
-        field={email}
-        fieldName="E-MAIL"
+        field={password}
+        fieldName="Nova senha"
         confirmDisabled={confirmDisabled}
         setConfirmDisabled={setConfirmDisabled}
         loading={loading}
         onSubmit={handlerSubmit}
-        msgDisabled="Ops, o e-mail precisa ser válido"
+        msgDisabled="Ops, sua senha não está de acordo com as regras"
         formField={
           <TextInput
-            value={email}
-            ref={emailField}
+            secureTextEntry={true}
+            value={password}
+            ref={passwordField}
             style={[
               styles.input,
               { color: loading ? Colors.textDisabled : Colors.textDark },
             ]}
             editable={!loading}
-            placeholder="Informe aqui seu E-mail"
-            keyboardType="email-address"
-            autoCompleteType="email"
+            placeholder="Informe uma nova senha"
+            autoCompleteType="password"
             autoCapitalize="none"
-            textContentType="emailAddress"
+            textContentType="newPassword"
             autoFocus={true}
             placeholderTextColor={Colors.textDisabled}
             maxLength={filedLength}
-            onChangeText={handlerEmail}
+            onChangeText={handlerPassword}
             onSubmitEditing={handlerSubmit}
           />
         }
-      ></OneFieldForm>
+      >
+        <View style={styles.tipContainer}>
+          <Text style={styles.tipHeader}>Regras:</Text>
+          <Text style={styles.tipItem}>- Mínimo de 8 caracteres</Text>
+          <Text style={styles.tipItem}>- Pelo menos uma letra maiúscula</Text>
+          <Text style={styles.tipItem}>- Pelo menos uma letra minúscula</Text>
+          <Text style={styles.tipItem}>- Pelo menos um número</Text>
+        </View>
+      </OneFieldForm>
     </>
   );
 }

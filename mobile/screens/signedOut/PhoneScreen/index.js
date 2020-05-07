@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { TextInput, Keyboard, Alert, Dimensions } from "react-native";
+import { View, Text, Alert, Dimensions } from "react-native";
+import { TextInputMask } from "react-native-masked-text";
 
 import OneFieldForm from "../../../components/OneFieldForm";
 import ProgressBar from "../../../components/ProgressBar";
@@ -9,23 +10,23 @@ import styles from "./styles";
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function EmailScreen({ navigation, route }) {
+export default function Phonescreen({ navigation, route }) {
   const filedLength = 150;
-  const [email, setEmail] = useState("");
-  const [progress, setProgress] = useState(0.42);
+  const [phone, setPhone] = useState("");
+  const [progress, setProgress] = useState(0.56);
   const [loading, setLoading] = useState(false);
   const [confirmDisabled, setConfirmDisabled] = useState(true);
-  const emailField = useRef(null);
+  const phoneField = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
-      setProgress(0.56);
+      setProgress(0.7);
     }, 250);
   }, []);
 
-  const handlerEmail = (e) => {
-    setEmail(e.trim());
-    if (!e.trim().match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i)) {
+  const handlerPhone = (e) => {
+    setPhone(e.trim());
+    if (!e.trim().match(/^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/i)) {
       setConfirmDisabled(true);
     } else {
       setConfirmDisabled(false);
@@ -33,10 +34,10 @@ export default function EmailScreen({ navigation, route }) {
   };
 
   const handlerSubmit = async () => {
-    const cleanedEmail = email.trim();
+    const unmaskedPhone = phoneField.current.getRawValue();
     const user = {
       ...route.params.user,
-      email: cleanedEmail,
+      phone: unmaskedPhone,
     };
     setLoading(true);
     setConfirmDisabled(true);
@@ -45,13 +46,12 @@ export default function EmailScreen({ navigation, route }) {
       setLoading(false);
       setConfirmDisabled(false);
 
-      if (email === "rafanleme@gmail.com")
+      if (unmaskedPhone === "19998208014")
         return Alert.alert(
           "Ops...",
-          "Este endereço de e-mail já está em uso por outra conta"
+          "Este número já está em uso por outra conta"
         );
-
-      navigation.navigate("PhoneScreen", user);
+      navigation.navigate("NewPasswordScreen", user);
     }, 250);
   };
 
@@ -66,31 +66,32 @@ export default function EmailScreen({ navigation, route }) {
         color={Colors.tintColor}
       />
       <OneFieldForm
-        field={email}
-        fieldName="E-MAIL"
+        field={phone}
+        fieldName="Celular"
         confirmDisabled={confirmDisabled}
         setConfirmDisabled={setConfirmDisabled}
         loading={loading}
         onSubmit={handlerSubmit}
-        msgDisabled="Ops, o e-mail precisa ser válido"
+        msgDisabled="Ops, o celular precisa ser válido"
         formField={
-          <TextInput
-            value={email}
-            ref={emailField}
+          <TextInputMask
+            type="cel-phone"
+            value={phone}
+            ref={phoneField}
             style={[
               styles.input,
               { color: loading ? Colors.textDisabled : Colors.textDark },
             ]}
             editable={!loading}
-            placeholder="Informe aqui seu E-mail"
-            keyboardType="email-address"
-            autoCompleteType="email"
+            placeholder="Informe aqui seu celular"
+            keyboardType="phone-pad"
+            autoCompleteType="tel"
             autoCapitalize="none"
-            textContentType="emailAddress"
+            textContentType="telephoneNumber"
             autoFocus={true}
             placeholderTextColor={Colors.textDisabled}
             maxLength={filedLength}
-            onChangeText={handlerEmail}
+            onChangeText={handlerPhone}
             onSubmitEditing={handlerSubmit}
           />
         }

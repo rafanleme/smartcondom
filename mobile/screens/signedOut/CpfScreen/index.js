@@ -42,7 +42,8 @@ export default function CpfSreen({ navigation }) {
           "CPF inválido, verifique o número e tente novamente"
         );
 
-      if (unmaskedCpf !== "39252377808") navigation.navigate("PassScreen");
+      if (unmaskedCpf !== "39252377807")
+        navigation.navigate("PasswordScreen", { cpf: unmaskedCpf });
       else navigation.navigate("HomeRegisterScreen", { cpf: unmaskedCpf });
     }, 250);
   };
@@ -57,25 +58,26 @@ export default function CpfSreen({ navigation }) {
         loading={loading}
         onSubmit={handlerSubmit}
         msgDisabled="Ops, preencha por favor o CPF"
-      >
-        <TextInputMask
-          type={"cpf"}
-          value={cpf}
-          ref={cpfField}
-          style={[
-            styles.input,
-            { color: loading ? Colors.textDisabled : Colors.textDark },
-          ]}
-          editable={!loading}
-          placeholder="Informe aqui seu CPF"
-          keyboardType="number-pad"
-          autoFocus={true}
-          placeholderTextColor={Colors.textDisabled}
-          maxLength={filedLength}
-          onChangeText={handlerCpf}
-          onSubmitEditing={handlerSubmit}
-        />
-      </OneFieldForm>
+        formField={
+          <TextInputMask
+            type={"cpf"}
+            value={cpf}
+            ref={cpfField}
+            style={[
+              styles.input,
+              { color: loading ? Colors.textDisabled : Colors.textDark },
+            ]}
+            editable={!loading}
+            placeholder="Informe aqui seu CPF"
+            keyboardType="number-pad"
+            autoFocus={true}
+            placeholderTextColor={Colors.textDisabled}
+            maxLength={filedLength}
+            onChangeText={handlerCpf}
+            onSubmitEditing={handlerSubmit}
+          />
+        }
+      ></OneFieldForm>
     </>
   );
 }

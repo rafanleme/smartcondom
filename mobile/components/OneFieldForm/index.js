@@ -66,9 +66,10 @@ export default function OneFieldForm(props) {
               color={Colors.tintColor}
             />
           </View>
+          {props.children}
           <View style={styles.containerInput}>
             <AnimatedLabel label={fieldName} show={field.length !== 0} />
-            {props.children}
+            {props.formField}
           </View>
           <View style={styles.containerFooter}>
             <ButtonConfirm

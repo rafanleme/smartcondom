@@ -66,4 +66,11 @@ export default StyleSheet.create({
     paddingTop: 12,
     justifyContent: "center",
   },
+  link: {
+    fontSize: 16,
+  },
+  containerInput: {
+    height: 60,
+    justifyContent: "flex-end",
+  },
 });

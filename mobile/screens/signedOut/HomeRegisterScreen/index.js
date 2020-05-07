@@ -61,7 +61,7 @@ export default function CpfSreen({ navigation, route }) {
     ]).start();
 
     setTimeout(() => {
-      setProgress(0.16);
+      setProgress(0.14);
     }, 250);
   }, []);
 

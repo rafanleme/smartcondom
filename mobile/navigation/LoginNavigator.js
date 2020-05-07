@@ -9,6 +9,9 @@ import RegisterTypeScreen from "../screens/signedOut/RegisterTypeScreen";
 import NameScreen from "../screens/signedOut/NameScreen";
 import HomeRegisterScreen from "../screens/signedOut/HomeRegisterScreen";
 import EmailScreen from "../screens/signedOut/EmailScreen";
+import PhoneScreen from "../screens/signedOut/PhoneScreen";
+import NewPasswordScreen from "../screens/signedOut/NewPasswordScreen";
+import PasswordScreen from "../screens/signedOut/PasswordScreen";
 
 import Colors from "../constants/Colors";
 
@@ -21,6 +24,8 @@ const optionsHeader = {
   headerTitleStyle: {
     fontWeight: "bold",
   },
+  headerTitleAlign: "center",
+  title: "",
 };
 
 export default function Login() {
@@ -36,14 +41,13 @@ export default function Login() {
       <Stack.Screen
         name="CpfScreen"
         component={CpfScreen}
-        options={{ ...optionsHeader, title: "Entrar com CPF" }}
+        options={{ ...optionsHeader, title: "" }}
       />
       <Stack.Screen
         name="RegisterTypeScreen"
         component={RegisterTypeScreen}
         options={{
           ...optionsHeader,
-          title: "Você é um",
           animationEnabled: false,
         }}
       />
@@ -52,7 +56,6 @@ export default function Login() {
         component={NameScreen}
         options={{
           ...optionsHeader,
-          title: "Seu nome",
           animationEnabled: false,
         }}
       />
@@ -61,7 +64,6 @@ export default function Login() {
         component={HomeRegisterScreen}
         options={{
           ...optionsHeader,
-          title: "Bem-vindo!",
           animationEnabled: false,
         }}
       />
@@ -70,7 +72,30 @@ export default function Login() {
         component={EmailScreen}
         options={{
           ...optionsHeader,
-          title: "Bem-vindo!",
+          animationEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="PhoneScreen"
+        component={PhoneScreen}
+        options={{
+          ...optionsHeader,
+          animationEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="NewPasswordScreen"
+        component={NewPasswordScreen}
+        options={{
+          ...optionsHeader,
+          animationEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="PasswordScreen"
+        component={PasswordScreen}
+        options={{
+          ...optionsHeader,
           animationEnabled: false,
         }}
       />

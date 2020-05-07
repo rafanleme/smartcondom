@@ -12,7 +12,7 @@ import styles from "./styles";
 const screenWidth = Dimensions.get("window").width;
 
 export default function CpfSreen({ navigation, route }) {
-  const [progress, setProgress] = useState(0.16);
+  const [progress, setProgress] = useState(0.14);
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function CpfSreen({ navigation, route }) {
     }).start();
 
     setTimeout(() => {
-      setProgress(0.32);
+      setProgress(0.28);
     }, 250);
   }, []);
 
