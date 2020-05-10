@@ -5,8 +5,8 @@ import TouchableCardView from "../../../components/TouchableCardView";
 import ProgressBar from "../../../components/ProgressBar";
 
 import Colors from "../../../constants/Colors";
-import ManagerIcon from "../../../assets/images/svg/ManagerIcon";
-import MemberIcon from "../../../assets/images/svg/MemberIcon";
+import ManagerIcon from "../../../../assets/images/svg/ManagerIcon";
+import MemberIcon from "../../../../assets/images/svg/MemberIcon";
 import styles from "./styles";
 
 const screenWidth = Dimensions.get("window").width;
@@ -27,11 +27,11 @@ export default function CpfSreen({ navigation, route }) {
   }, []);
 
   const navigateToNameScreen = (choice) => {
-    const manager = {
+    const user = {
       cpf: route.params.cpf,
       type: choice,
     };
-    navigation.navigate("NameScreen", { manager });
+    navigation.navigate("NameScreen", { user });
   };
 
   return (

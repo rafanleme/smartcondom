@@ -6,6 +6,7 @@ export default {
   textDark: "#444",
   textLight: "#EEE",
   textDisabled: "#CCC",
+  success: "#00AF00",
   transparent: "#FFFFFF00",
   bgLoading: "#CCCCCC55",
   tabIconDefault: "#ccc",

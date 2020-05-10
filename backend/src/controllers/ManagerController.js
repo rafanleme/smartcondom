@@ -4,7 +4,7 @@ const Manager = require("../models/Manager");
 
 module.exports = {
   async store(req, res) {
-    const { name, cpf, email, celular, password } = req.body;
+    const { name, cpf, email, cellphone, password } = req.body;
 
     let manager = await Manager.findOne({ where: { cpf: cpf } });
 
@@ -14,13 +14,19 @@ module.exports = {
 
     if (manager) return res.status(400).json({ error: "email already exists" });
 
-    const cryptPassword = await bcrypt.hash(password, 10)
+    const cryptPassword = await bcrypt.hash(password, 10);
 
-    manager = await Manager.create({ name, cpf, email, celular, password: cryptPassword });
+    manager = await Manager.create({
+      name,
+      cpf,
+      email,
+      cellphone,
+      password: cryptPassword,
+    });
 
-    manager = manager.dataValues
-    
-    delete manager.password
+    manager = manager.dataValues;
+
+    delete manager.password;
 
     return res.status(201).send(manager);
   },

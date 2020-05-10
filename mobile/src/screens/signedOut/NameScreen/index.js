@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Alert, Dimensions } from "react-native";
+import { TextInput, Keyboard, Alert, Dimensions } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 
 import OneFieldForm from "../../../components/OneFieldForm";
@@ -10,49 +10,43 @@ import styles from "./styles";
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function Phonescreen({ navigation, route }) {
-  const filedLength = 150;
-  const [phone, setPhone] = useState("");
-  const [progress, setProgress] = useState(0.56);
+export default function NameSreen({ navigation, route }) {
+  const fieldLength = 150;
+  const [name, setName] = useState("");
+  const [progress, setProgress] = useState(0.28);
   const [loading, setLoading] = useState(false);
   const [confirmDisabled, setConfirmDisabled] = useState(true);
-  const phoneField = useRef(null);
+  const nameField = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
-      setProgress(0.7);
+      setProgress(0.42);
     }, 250);
   }, []);
 
-  const handlerPhone = (e) => {
-    setPhone(e.trim());
-    if (!e.trim().match(/^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$/i)) {
+  const handlerName = (e) => {
+    if (!e.match(/^[A-Za-záàâãéèêíïóôõöúçñ ]+$/) && e.length !== 0) return;
+    setName(e);
+    if (e.length < 4) {
       setConfirmDisabled(true);
     } else {
       setConfirmDisabled(false);
     }
   };
 
-  const handlerSubmit = async () => {
-    const unmaskedPhone = phoneField.current.getRawValue();
+  const handlerSubmit = () => {
+    const cleanedName = name.trim();
+
     const user = {
       ...route.params.user,
-      phone: unmaskedPhone,
+      name: cleanedName,
     };
     setLoading(true);
     setConfirmDisabled(true);
+    setLoading(false);
+    setConfirmDisabled(false);
 
-    setTimeout(() => {
-      setLoading(false);
-      setConfirmDisabled(false);
-
-      if (unmaskedPhone === "19998208014")
-        return Alert.alert(
-          "Ops...",
-          "Este número já está em uso por outra conta"
-        );
-      navigation.navigate("NewPasswordScreen", user);
-    }, 250);
+    navigation.navigate("EmailScreen", { user });
   };
 
   return (
@@ -66,32 +60,29 @@ export default function Phonescreen({ navigation, route }) {
         color={Colors.tintColor}
       />
       <OneFieldForm
-        field={phone}
-        fieldName="Celular"
+        field={name}
+        fieldName="Nome"
         confirmDisabled={confirmDisabled}
         setConfirmDisabled={setConfirmDisabled}
         loading={loading}
         onSubmit={handlerSubmit}
-        msgDisabled="Ops, o celular precisa ser válido"
+        msgDisabled="Ops, o nome deve ter pelo menos 4 caracteres"
         formField={
-          <TextInputMask
-            type="cel-phone"
-            value={phone}
-            ref={phoneField}
+          <TextInput
+            value={name}
+            ref={nameField}
             style={[
               styles.input,
               { color: loading ? Colors.textDisabled : Colors.textDark },
             ]}
             editable={!loading}
-            placeholder="Informe aqui seu celular"
-            keyboardType="phone-pad"
-            autoCompleteType="tel"
-            autoCapitalize="none"
-            textContentType="telephoneNumber"
-            autoFocus={true}
             placeholderTextColor={Colors.textDisabled}
-            maxLength={filedLength}
-            onChangeText={handlerPhone}
+            placeholder="Informe aqui seu nome"
+            autoCapitalize="words"
+            keyboardType="default"
+            autoFocus={true}
+            maxLength={fieldLength}
+            onChangeText={handlerName}
             onSubmitEditing={handlerSubmit}
           />
         }

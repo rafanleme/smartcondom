@@ -1,21 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
-import { TextInput, Keyboard, Alert, Dimensions } from "react-native";
+import { TextInput, Keyboard, Alert, Dimensions, Text } from "react-native";
+
+// import {} from "@react-navigation/native";
 
 import OneFieldForm from "../../../components/OneFieldForm";
 import ProgressBar from "../../../components/ProgressBar";
+import SkipHeaderButton from "../../../components/SkipHeaderButton";
+import api from "../../../services/api";
 
 import Colors from "../../../constants/Colors";
 import styles from "./styles";
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function EmailScreen({ navigation, route }) {
+function EmailScreen({ navigation, route }) {
   const filedLength = 150;
   const [email, setEmail] = useState("");
   const [progress, setProgress] = useState(0.42);
   const [loading, setLoading] = useState(false);
   const [confirmDisabled, setConfirmDisabled] = useState(true);
   const emailField = useRef(null);
+
+  navigation.setOptions({
+    headerRight: () => <SkipHeaderButton />,
+  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -41,18 +49,20 @@ export default function EmailScreen({ navigation, route }) {
     setLoading(true);
     setConfirmDisabled(true);
 
-    setTimeout(() => {
-      setLoading(false);
-      setConfirmDisabled(false);
+    const response = await api.get(`/isInUse/email/${cleanedEmail}`);
 
-      if (email === "rafanleme@gmail.com")
-        return Alert.alert(
-          "Ops...",
-          "Este endereço de e-mail já está em uso por outra conta"
-        );
+    setLoading(false);
+    setConfirmDisabled(false);
 
-      navigation.navigate("PhoneScreen", user);
-    }, 250);
+    if (response.data.inUse)
+      return Alert.alert(
+        "Ops...",
+        "Este endereço de e-mail já está em uso por outra conta"
+      );
+
+    console.log("--", user);
+
+    navigation.navigate("PhoneScreen", { user });
   };
 
   return (
@@ -98,3 +108,5 @@ export default function EmailScreen({ navigation, route }) {
     </>
   );
 }
+
+export default EmailScreen;

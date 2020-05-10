@@ -3,6 +3,7 @@ import { TextInput, Keyboard, Alert, Dimensions } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 
 import OneFieldForm from "../../../components/OneFieldForm";
+import api from "../../../services/api";
 
 import Colors from "../../../constants/Colors";
 import styles from "./styles";
@@ -22,30 +23,37 @@ export default function CpfSreen({ navigation }) {
     if (e.length < filedLength) {
       setConfirmDisabled(true);
     } else {
-      Keyboard.dismiss();
       setConfirmDisabled(false);
     }
   };
 
-  const handlerSubmit = () => {
+  const handlerSubmit = async () => {
     const unmaskedCpf = cpfField.current.getRawValue();
+    if (!cpfField.current.isValid())
+      return Alert.alert(
+        "Ops",
+        "CPF inválido, verifique o número e tente novamente"
+      );
     setLoading(true);
     setConfirmDisabled(true);
 
-    setTimeout(() => {
+    try {
+      const response = await api.get(`/isInUse/cpf/${unmaskedCpf}`);
+
       setLoading(false);
-      setConfirmDisabled(false);
 
-      if (!cpfField.current.isValid())
-        return Alert.alert(
-          "Ops",
-          "CPF inválido, verifique o número e tente novamente"
-        );
-
-      if (unmaskedCpf !== "39252377807")
-        navigation.navigate("PasswordScreen", { cpf: unmaskedCpf });
-      else navigation.navigate("HomeRegisterScreen", { cpf: unmaskedCpf });
-    }, 250);
+      if (response.data.inUse)
+        return navigation.navigate("PasswordScreen", { cpf: unmaskedCpf });
+      else
+        return navigation.navigate("HomeRegisterScreen", { cpf: unmaskedCpf });
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      return Alert.alert(
+        "Ops",
+        "CPF inválido, verifique o número e tente novamente"
+      );
+    }
   };
 
   return (

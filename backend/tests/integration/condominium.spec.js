@@ -17,7 +17,7 @@ describe("CONDOMINIUM", () => {
       name: "Rafael Leme",
       cpf: generatedCpf,
       email: "rafan@gmail.com",
-      celular: "5519998208013",
+      celphone: "5519998208013",
       password: "123456",
     });
     managerId = response.body.id;
@@ -100,11 +100,11 @@ describe("CONDOMINIUM", () => {
       name: "Rafael Leme",
       cpf: cpf.generate(),
       email: "rafan20@gmail.com",
-      celular: "5519998208113",
+      celphone: "5519998208113",
       password: "123456",
     });
 
-    newManagerId = response.body.id
+    newManagerId = response.body.id;
 
     response = await request(app)
       .post(`/condominiums/${condominiumId}/managers/${newManagerId}`)
@@ -123,7 +123,6 @@ describe("CONDOMINIUM", () => {
       });
 
     expect(response.ok).toBe(true);
-
   });
 
   it("should not be able to add a manager into a condominium that you do not manage", async () => {
@@ -131,11 +130,11 @@ describe("CONDOMINIUM", () => {
       name: "Rafael Leme",
       cpf: cpf.generate(),
       email: "rafan11@gmail.com",
-      celular: "5519998208113",
+      celphone: "5519998208113",
       password: "123456",
     });
 
-    const newManagerId = response.body.id
+    const newManagerId = response.body.id;
 
     response = await request(app)
       .post("/condominiums")
@@ -153,7 +152,7 @@ describe("CONDOMINIUM", () => {
         },
       });
 
-    const newCondominiumId = response.body.id
+    const newCondominiumId = response.body.id;
 
     response = await request(app)
       .post(`/condominiums/${newCondominiumId}/managers/${newManagerId}`)
@@ -172,9 +171,8 @@ describe("CONDOMINIUM", () => {
       });
     expect(response.ok).toBe(false);
     expect(response.status).toBe(401);
-    expect(response.body).toHaveProperty('error')
-    expect(response.body.error).toEqual('unauthorized to this condominium')
-
+    expect(response.body).toHaveProperty("error");
+    expect(response.body.error).toEqual("unauthorized to this condominium");
   });
 
   it("should not be able to add a manager into a condominium without being principal", async () => {
@@ -182,11 +180,11 @@ describe("CONDOMINIUM", () => {
       name: "Rafael Leme",
       cpf: cpf.generate(),
       email: "rafan19@gmail.com",
-      celular: "5519998208113",
+      celphone: "5519998208113",
       password: "123456",
     });
 
-    const newManagerId = response.body.id
+    const newManagerId = response.body.id;
 
     response = await request(app)
       .post("/condominiums")
@@ -204,7 +202,7 @@ describe("CONDOMINIUM", () => {
         },
       });
 
-    const newCondominiumId = response.body.id
+    const newCondominiumId = response.body.id;
 
     response = await request(app)
       .post(`/condominiums/${newCondominiumId}/managers/${newManagerId}`)
@@ -223,9 +221,8 @@ describe("CONDOMINIUM", () => {
       });
     expect(response.ok).toBe(false);
     expect(response.status).toBe(401);
-    expect(response.body).toHaveProperty('error')
-    expect(response.body.error).toEqual('unauthorized to this condominium')
-
+    expect(response.body).toHaveProperty("error");
+    expect(response.body.error).toEqual("unauthorized to this condominium");
   });
 
   it("should be able to block a manager in a condominium", async () => {
@@ -234,11 +231,11 @@ describe("CONDOMINIUM", () => {
       name: "Rafael Leme",
       cpf: cpf.generate(),
       email: "rafa1234@gmail.com",
-      celular: "5519998208113",
+      celphone: "5519998208113",
       password: "123456",
     });
 
-    const newManagerId = response.body.id
+    const newManagerId = response.body.id;
 
     //manager 1 cria condominium 1
     response = await request(app)
@@ -256,7 +253,7 @@ describe("CONDOMINIUM", () => {
           uf: "SP",
         },
       });
-    const newCondominiumId = response.body.id
+    const newCondominiumId = response.body.id;
 
     //manager 1 adiciona manager global ao condominio 1
     response = await request(app)
@@ -272,7 +269,5 @@ describe("CONDOMINIUM", () => {
 
     expect(response.ok).toBe(true);
     expect(response.status).toBe(204);
-
   });
-
 });

@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Alert, TextInput, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Keyboard,
+  TextInput,
+  Dimensions,
+  Alert,
+} from "react-native";
 
 import OneFieldForm from "../../../components/OneFieldForm";
 import ProgressBar from "../../../components/ProgressBar";
+
+import api from "../../../services/api";
 
 import Colors from "../../../constants/Colors";
 import styles from "./styles";
@@ -40,11 +49,26 @@ export default function NewPasswordScreen({ navigation, route }) {
     setLoading(true);
     setConfirmDisabled(true);
 
-    setLoading(false);
-    setConfirmDisabled(false);
+    try {
+      const type = user.type;
+      delete user.type;
 
-    //if(api.register())
-    navigation.navigate("SignedIn", user);
+      console.log("teste");
+
+      await api.post(`/${type}s`, user);
+
+      setLoading(false);
+      setConfirmDisabled(false);
+
+      Keyboard.dismiss();
+
+      navigation.navigate("SuccessRegisterScreen", user);
+    } catch (error) {
+      setLoading(false);
+      setConfirmDisabled(false);
+      console.log(error.response);
+      return Alert.alert("Houve um problema", "Tente novamente mais tarde");
+    }
   };
 
   return (

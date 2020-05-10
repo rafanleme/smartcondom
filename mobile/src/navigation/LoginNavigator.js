@@ -1,4 +1,5 @@
 import React from "react";
+import { Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
@@ -12,6 +13,7 @@ import EmailScreen from "../screens/signedOut/EmailScreen";
 import PhoneScreen from "../screens/signedOut/PhoneScreen";
 import NewPasswordScreen from "../screens/signedOut/NewPasswordScreen";
 import PasswordScreen from "../screens/signedOut/PasswordScreen";
+import SuccessRegisterScreen from "../screens/signedOut/SuccessRegisterScreen";
 
 import Colors from "../constants/Colors";
 
@@ -26,6 +28,10 @@ const optionsHeader = {
   },
   headerTitleAlign: "center",
   title: "",
+  headerBackTitleStyle: {
+    color: Colors.textDark,
+  },
+  headerTintColor: Colors.textDark,
 };
 
 export default function Login() {
@@ -41,7 +47,10 @@ export default function Login() {
       <Stack.Screen
         name="CpfScreen"
         component={CpfScreen}
-        options={{ ...optionsHeader, title: "" }}
+        options={{
+          ...optionsHeader,
+          title: "",
+        }}
       />
       <Stack.Screen
         name="RegisterTypeScreen"
@@ -94,6 +103,14 @@ export default function Login() {
       <Stack.Screen
         name="PasswordScreen"
         component={PasswordScreen}
+        options={{
+          ...optionsHeader,
+          animationEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="SuccessRegisterScreen"
+        component={SuccessRegisterScreen}
         options={{
           ...optionsHeader,
           animationEnabled: false,

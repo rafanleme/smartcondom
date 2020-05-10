@@ -10,14 +10,12 @@ import {
 import ProgressBar from "../../../components/ProgressBar";
 
 import Colors from "../../../constants/Colors";
-import ManagerIcon from "../../../assets/images/svg/ManagerIcon";
-import MemberIcon from "../../../assets/images/svg/MemberIcon";
 import styles from "./styles";
 
 const screenWidth = Dimensions.get("window").width;
 
-export default function CpfSreen({ navigation, route }) {
-  const [progress, setProgress] = useState(0);
+export default function SuccessRegisterSreen({ navigation, route }) {
+  const [progress, setProgress] = useState(0.85);
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const animTxt1 = useRef(new Animated.Value(0)).current;
   const animTxt2 = useRef(new Animated.Value(0)).current;
@@ -32,37 +30,17 @@ export default function CpfSreen({ navigation, route }) {
       }),
       Animated.timing(animTxt2, {
         toValue: 1,
-        duration: 800,
-      }),
-      Animated.timing(animTxt3, {
-        toValue: 1,
-        duration: 800,
-      }),
-      Animated.timing(animTxt4, {
-        toValue: 1,
-        duration: 200,
-      }),
-      Animated.timing(animTxt4, {
-        toValue: 0.2,
-        duration: 120,
-      }),
-      Animated.timing(animTxt4, {
-        toValue: 1,
-        duration: 120,
-      }),
-      Animated.timing(animTxt4, {
-        toValue: 0.2,
-        duration: 120,
-      }),
-      Animated.timing(animTxt4, {
-        toValue: 1,
-        duration: 120,
+        duration: 400,
       }),
     ]).start();
 
     setTimeout(() => {
-      setProgress(0.14);
+      setProgress(1);
     }, 250);
+
+    setTimeout(() => {
+      navigation.replace("SignedIn");
+    }, 1500);
   }, []);
 
   const navigateToRegisterTypeScreen = () => {
@@ -79,16 +57,10 @@ export default function CpfSreen({ navigation, route }) {
         >
           <View>
             <Animated.Text style={[styles.text1, { opacity: animTxt1 }]}>
-              Olá, vi que você é novo por aqui.
+              OK!
             </Animated.Text>
             <Animated.Text style={[styles.text2, { opacity: animTxt2 }]}>
-              Seja bem-vindo!
-            </Animated.Text>
-            <Animated.Text style={[styles.text3, { opacity: animTxt3 }]}>
-              Para começarmos vamos fazer um breve cadastro.
-            </Animated.Text>
-            <Animated.Text style={[styles.text4, { opacity: animTxt4 }]}>
-              Toque para começar
+              Vamos começar...
             </Animated.Text>
           </View>
         </TouchableWithoutFeedback>

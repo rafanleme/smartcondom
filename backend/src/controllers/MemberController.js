@@ -4,16 +4,17 @@ const Member = require("../models/Member");
 
 module.exports = {
   async store(req, res) {
-    const { name, cpf, email, celular, password } = req.body;
+    const { name, cpf, email, cellphone, password } = req.body;
 
     try {
       let member = await Member.findOne({ where: { cpf: cpf } });
 
       if (member) return res.status(400).json({ error: "cpf already exists" });
 
-      member = await Member.findOne({ where: { email: email } });
+      if (email) member = await Member.findOne({ where: { email: email } });
 
-      if (member) return res.status(400).json({ error: "email already exists" });
+      if (member)
+        return res.status(400).json({ error: "email already exists" });
 
       const cryptPassword = await bcrypt.hash(password, 10);
 
@@ -21,7 +22,7 @@ module.exports = {
         name,
         cpf,
         email,
-        celular,
+        cellphone,
         password: cryptPassword,
       });
 

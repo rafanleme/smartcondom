@@ -3,8 +3,8 @@ import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { SplashScreen } from "expo";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Routes from "./navigation/routes";
-import useLinking from "./navigation/useLinking";
+import Routes from "./src/navigation/routes";
+import useLinking from "./src/navigation/useLinking";
 
 const Stack = createStackNavigator();
 

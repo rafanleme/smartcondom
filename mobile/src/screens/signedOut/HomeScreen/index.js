@@ -11,8 +11,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 import styles from "./styles";
 import Colors from "../../../constants/Colors";
-import bgImg from "../../../assets/images/bg-home.jpg";
-import logoImg from "../../../assets/images/icon.png";
+import bgImg from "../../../../assets/images/bg-home.jpg";
+import logoImg from "../../../../assets/images/icon.png";
 
 export default function Home({ navigation }) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
