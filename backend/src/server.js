@@ -1,4 +1,4 @@
-const app = require('./app')
-require('./database')
+const app = require("./app");
+require("./database");
 
-app.listen(3333)
+app.listen(3333);

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "pretest": "cross-env NODE_ENV=test yarn sequelize db:migrate",
-    "test": "cross-env NODE_ENV=test jest -t living  || yarn",
+    "test": "cross-env NODE_ENV=test jest -t condominium  || yarn",
     "posttest": "cross-env NODE_ENV=test yarn sequelize db:migrate:undo:all",
     "reset-db": "yarn sequelize db:migrate:undo:all && yarn sequelize db:migrate"
   },

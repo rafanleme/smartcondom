@@ -58,6 +58,12 @@ export default function CpfSreen({ navigation }) {
 
   return (
     <>
+      <Text>
+        LH<Text>09996</Text>
+        <Text>
+          0655<Text>US</Text>
+        </Text>
+      </Text>
       <OneFieldForm
         field={cpf}
         fieldName="CPF"
