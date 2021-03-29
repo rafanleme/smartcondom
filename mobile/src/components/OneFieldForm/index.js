@@ -37,7 +37,7 @@ export default function OneFieldForm(props) {
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 + 64 : 18 + 64}
-      style={styles.container}
+      
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       enabled
     >
